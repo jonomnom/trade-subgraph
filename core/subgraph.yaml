@@ -1,0 +1,252 @@
+specVersion: 0.0.4
+description: Metavault Trade Core Subgraph
+repository: https://github.com/metavaultorg/trade-subgraph
+schema:
+  file: ./schema.graphql
+
+dataSources:
+  # - kind: ethereum/contract
+  #   name: UniswapPool
+  #   network: matic
+  #   source:
+  #     address: "0x30f5c777ab316e6878D2b71a32274e4C2842327A"
+  #     abi: UniswapPoolV3
+  #     startBlock: 29028182
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.4
+  #     language: wasm/assemblyscript
+  #     entities:
+  #       - UniswapPrice
+  #     abis:
+  #       - name: UniswapPoolV3
+  #         file: ./abis/UniswapPoolV3.json
+  #     eventHandlers:
+  #       - event: Swap(indexed address,indexed address,int256,int256,uint160,uint128,int24)
+  #         handler: handleUniswapMvxUSDSwap
+  #     file: ./src/pricesMapping.ts
+   
+
+  - kind: ethereum/contract
+    name: MvlpManager
+    network: matic
+    source:
+      address: "0x13E733dDD6725a8133bec31b2Fc5994FA5c26Ea9"
+      abi: MvlpManager
+      startBlock: 29028182
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - HourlyMvlpStat
+      abis:
+        - name: MvlpManager
+          file: ./abis/MvlpManager.json
+      eventHandlers:
+        - event: AddLiquidity(address,address,uint256,uint256,uint256,uint256,uint256)
+          handler: handleAddLiquidity
+        - event: RemoveLiquidity(address,address,uint256,uint256,uint256,uint256,uint256)
+          handler: handleRemoveLiquidity
+      file: ./src/mapping.ts
+  
+  - kind: ethereum/contract
+    name: OrderBook
+    network: matic
+    source:
+      address: "0x178aEc588E98601287eE72d0B55BCb895268eD2c"
+      abi: OrderBook
+      startBlock: 29028182
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Order
+      abis:
+        - name: OrderBook
+          file: ./abis/OrderBook.json
+      eventHandlers:
+        - event: CreateIncreaseOrder(indexed address,uint256,address,uint256,address,address,uint256,bool,uint256,bool,uint256)
+          handler: handleCreateIncreaseOrder
+        - event: CancelIncreaseOrder(indexed address,uint256,address,uint256,address,address,uint256,bool,uint256,bool,uint256)
+          handler: handleCancelIncreaseOrder
+        - event: ExecuteIncreaseOrder(indexed address,uint256,address,uint256,address,address,uint256,bool,uint256,bool,uint256,uint256)
+          handler: handleExecuteIncreaseOrder
+
+        - event: CreateDecreaseOrder(indexed address,uint256,address,uint256,address,uint256,bool,uint256,bool,uint256)
+          handler: handleCreateDecreaseOrder
+        - event: CancelDecreaseOrder(indexed address,uint256,address,uint256,address,uint256,bool,uint256,bool,uint256)
+          handler: handleCancelDecreaseOrder
+        - event: ExecuteDecreaseOrder(indexed address,uint256,address,uint256,address,uint256,bool,uint256,bool,uint256,uint256)
+          handler: handleExecuteDecreaseOrder
+
+        - event: CreateSwapOrder(indexed address,uint256,address[],uint256,uint256,uint256,bool,bool,uint256)
+          handler: handleCreateSwapOrder
+        - event: CancelSwapOrder(indexed address,uint256,address[],uint256,uint256,uint256,bool,bool,uint256)
+          handler: handleCancelSwapOrder
+        - event: ExecuteSwapOrder(indexed address,uint256,address[],uint256,uint256,uint256,uint256,bool,bool,uint256)
+          handler: handleExecuteSwapOrder
+      file: ./src/ordersMapping.ts
+
+  - kind: ethereum/contract
+    name: FeeMvxRewardDistributor
+    network: matic
+    source:
+      address: "0xfb662d23407Ad2482B65864647875E1614d05Aa8"
+      abi: RewardDistributor
+      startBlock: 29028182
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - MvxStat
+      abis:
+        - name: RewardDistributor
+          file: ./abis/RewardDistributor.json
+      eventHandlers:
+        - event: Distribute(uint256)
+          handler: handleDistributeEthToMvx
+      file: ./src/mapping.ts
+
+  - kind: ethereum/contract
+    name: EsMvxRewardDistributor
+    network: matic
+    source:
+      address: "0xAeFE07f369FA46026CB27fB9d09eF59E913d6119"
+      abi: RewardDistributor
+      startBlock: 29028182
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - MvxStat
+      abis:
+        - name: RewardDistributor
+          file: ./abis/RewardDistributor.json
+      eventHandlers:
+        - event: Distribute(uint256)
+          handler: handleDistributeEsmvxToMvx
+      file: ./src/mapping.ts
+
+  - kind: ethereum/contract
+    name: FeeMvxMvlpRewardDistributor
+    network: matic
+    source:
+      address: "0xcA05c0f5626e5dAe51B211783b0cCAB1d041A3FA"
+      abi: RewardDistributor
+      startBlock: 29028182
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - MvxStat
+      abis:
+        - name: RewardDistributor
+          file: ./abis/RewardDistributor.json
+      eventHandlers:
+        - event: Distribute(uint256)
+          handler: handleDistributeEthToMvlp
+      file: ./src/mapping.ts
+
+  - kind: ethereum/contract
+    name: EsmvxMvlpRewardDistributor
+    network: matic
+    source:
+      address: "0xaf26dBF99bA3bBD758002a4BfB53762eaf1bd7F2"
+      abi: RewardDistributor
+      startBlock: 29028182
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - MvxStat
+      abis:
+        - name: RewardDistributor
+          file: ./abis/RewardDistributor.json
+      eventHandlers:
+        - event: Distribute(uint256)
+          handler: handleDistributeEsmvxToMvlp
+      file: ./src/mapping.ts
+
+  - kind: ethereum/contract
+    name: VaultTrade
+    network: matic
+    source:
+      address: "0x32848E2d3aeCFA7364595609FB050A301050A6B4"
+      abi: Vault
+      startBlock: 29028182
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - TradingStat
+      abis:
+        - name: Vault
+          file: ./abis/Vault.json
+      eventHandlers:
+        - event: ClosePosition(bytes32,uint256,uint256,uint256,uint256,uint256,int256)
+          handler: handleClosePosition
+        - event: IncreasePosition(bytes32,address,address,address,uint256,uint256,bool,uint256,uint256)
+          handler: handleIncreasePosition
+        - event: DecreasePosition(bytes32,address,address,address,uint256,uint256,bool,uint256,uint256)
+          handler: handleDecreasePosition
+        - event: LiquidatePosition(bytes32,address,address,address,bool,uint256,uint256,uint256,int256,uint256)
+          handler: handleLiquidatePosition
+      file: ./src/tradingMapping.ts
+
+  - kind: ethereum/contract
+    name: Vault
+    network: matic
+    source:
+      address: "0x32848E2d3aeCFA7364595609FB050A301050A6B4"
+      abi: Vault
+      startBlock: 29028182
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Swap
+        - IncreasePosition
+        - DecreasePosition
+        - HourlyVolume
+        - HourlyVolumeBySource
+        - HourlyVolumeByToken
+        - HourlyFee
+        - Transaction
+        - FundingFee
+        - Action
+        - ActionData
+      abis:
+        - name: Vault
+          file: ./abis/Vault.json
+      eventHandlers:
+        - event: UpdateFundingRate(address,uint256)
+          handler: handleUpdateFundingRate
+        - event: Swap(address,address,address,uint256,uint256,uint256,uint256)
+          handler: handleSwap
+        - event: CollectMarginFees(address,uint256,uint256)
+          handler: handleCollectMarginFees
+        - event: BuyUSDM(address,address,uint256,uint256,uint256)
+          handler: handleBuyUSDM
+        - event: SellUSDM(address,address,uint256,uint256,uint256)
+          handler: handleSellUSDM
+        - event: IncreasePosition(bytes32,address,address,address,uint256,uint256,bool,uint256,uint256)
+          handler: handleIncreasePosition
+        - event: DecreasePosition(bytes32,address,address,address,uint256,uint256,bool,uint256,uint256)
+          handler: handleDecreasePosition
+        - event: UpdatePosition(bytes32,uint256,uint256,uint256,uint256,uint256,int256,uint256)
+          handler: handleUpdatePosition
+        - event: LiquidatePosition(bytes32,address,address,address,bool,uint256,uint256,uint256,int256,uint256)
+          handler: handleLiquidatePosition
+        - event: IncreasePoolAmount(address,uint256)
+          handler: handleIncreasePoolAmount
+        - event: DecreasePoolAmount(address,uint256)
+          handler: handleDecreasePoolAmount
+      file: ./src/mapping.ts

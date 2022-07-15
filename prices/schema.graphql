@@ -1,0 +1,25 @@
+enum Period {
+  hourly
+  daily
+  weekly
+  total
+}
+
+type ChainlinkPrice @entity {
+  id: ID!
+  token: String!
+  value: BigInt!
+  timestamp: Int!
+  period: String!
+}
+
+type CandlePrice @entity {
+  id: ID!
+  token: String!
+  timestamp: Int!
+  period: String!
+  o: BigInt!
+  c: BigInt!
+  h: BigInt!
+  l: BigInt!
+}

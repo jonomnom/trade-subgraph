@@ -1,0 +1,138 @@
+specVersion: 0.0.4
+description: Metavault Trade Chainlink Prices Subgraph
+repository: https://github.com/metavaultorg/trade-subgraph
+schema:
+  file: ./schema.graphql
+
+dataSources:
+  - kind: ethereum/contract
+    name: ChainlinkAggregatorBTC
+    network: matic
+    source:
+      address: "0x9b489f7fffa89ea450e3121603e79d9093a9396e"
+      abi: ChainlinkAggregator
+      startBlock: 29000000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - ChainlinkPrice
+        - CandlePrice
+      abis:
+        - name: ChainlinkAggregator
+          file: ./abis/ChainlinkAggregator.json
+      eventHandlers:
+        - event: AnswerUpdated(indexed int256,indexed uint256,uint256)
+          handler: handleAnswerUpdatedBTC
+      file: ./src/pricesMapping.ts
+
+  - kind: ethereum/contract
+    name: ChainlinkAggregatorETH
+    network: matic
+    source:
+      address: "0x4dD6655Ad5ed7C06c882f496E3f42acE5766cb89"
+      abi: ChainlinkAggregator
+      startBlock: 29000000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - ChainlinkPrice
+        - CandlePrice
+      abis:
+        - name: ChainlinkAggregator
+          file: ./abis/ChainlinkAggregator.json
+      eventHandlers:
+        - event: AnswerUpdated(indexed int256,indexed uint256,uint256)
+          handler: handleAnswerUpdatedETH
+      file: ./src/pricesMapping.ts
+
+  - kind: ethereum/contract
+    name: ChainlinkAggregatorMATIC
+    network: matic
+    source:
+      address: "0x1278c74c3b2f8c3bca0089b4e128faf023615ecf"
+      abi: ChainlinkAggregator
+      startBlock: 29000000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - ChainlinkPrice
+        - CandlePrice
+      abis:
+        - name: ChainlinkAggregator
+          file: ./abis/ChainlinkAggregator.json
+      eventHandlers:
+        - event: AnswerUpdated(indexed int256,indexed uint256,uint256)
+          handler: handleAnswerUpdatedMATIC
+      file: ./src/pricesMapping.ts
+
+  - kind: ethereum/contract
+    name: ChainlinkAggregatorLINK
+    network: matic
+    source:
+      address: "0xdbbf66711c9a0dff777797d82dda7009b6c846dd"
+      abi: ChainlinkAggregator
+      startBlock: 29000000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - ChainlinkPrice
+        - CandlePrice
+      abis:
+        - name: ChainlinkAggregator
+          file: ./abis/ChainlinkAggregator.json
+      eventHandlers:
+        - event: AnswerUpdated(indexed int256,indexed uint256,uint256)
+          handler: handleAnswerUpdatedLINK
+      file: ./src/pricesMapping.ts
+
+  - kind: ethereum/contract
+    name: ChainlinkAggregatorUNI
+    network: matic
+    source:
+      address: "0x166816cacb15f80badc5cd0cc24d64c8d1d1cf61"
+      abi: ChainlinkAggregator
+      startBlock: 29000000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - ChainlinkPrice
+        - CandlePrice
+      abis:
+        - name: ChainlinkAggregator
+          file: ./abis/ChainlinkAggregator.json
+      eventHandlers:
+        - event: AnswerUpdated(indexed int256,indexed uint256,uint256)
+          handler: handleAnswerUpdatedUNI
+      file: ./src/pricesMapping.ts
+
+  - kind: ethereum/contract
+    name: ChainlinkAggregatorAAVE
+    network: matic
+    source:
+      address: "0xcac8362649dae2cc0a91e1d200a93e4cef620be5"
+      abi: ChainlinkAggregator
+      startBlock: 29000000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - ChainlinkPrice
+        - CandlePrice
+      abis:
+        - name: ChainlinkAggregator
+          file: ./abis/ChainlinkAggregator.json
+      eventHandlers:
+        - event: AnswerUpdated(indexed int256,indexed uint256,uint256)
+          handler: handleAnswerUpdatedAAVE
+      file: ./src/pricesMapping.ts

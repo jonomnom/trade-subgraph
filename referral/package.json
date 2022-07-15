@@ -1,0 +1,16 @@
+{
+  "name": "@metavault/mvx-subgraph",
+  "license": "MIT",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy-remote": "graph deploy --product hosted-service metavaultorg/mvx-referral",
+    "create-local": "graph create --node http://localhost:8020/ metavaultorg/mvx-referral",
+    "deploy-local": "graph deploy --node http://localhost:8020/ metavaultorg/mvx-referral",
+    "remove-local": "graph remove --node http://localhost:8020/ metavaultorg/mvx-referral"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "0.21.1",
+    "@graphprotocol/graph-ts": "0.20.0"
+  }
+}
