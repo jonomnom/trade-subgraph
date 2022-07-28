@@ -26,6 +26,27 @@ dataSources:
       file: ./src/mapping.ts
 
   - kind: ethereum/contract
+    name: OrderBookV2
+    network: matic
+    source:
+      address: "0x3678373EC58E8455F882308DB2F46Ab824C66102"
+      abi: OrderBook
+      startBlock: 31150000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - ExecuteDecreaseOrder
+      abis:
+        - name: OrderBook
+          file: ./abis/OrderBook.json
+      eventHandlers:
+        - event: ExecuteDecreaseOrder(indexed address,uint256,address,uint256,address,uint256,bool,uint256,bool,uint256,uint256)
+          handler: handleExecuteDecreaseOrder
+      file: ./src/mapping.ts
+
+  - kind: ethereum/contract
     name: BatchSender
     network: matic
     source:
@@ -53,6 +74,30 @@ dataSources:
       address: "0xeec142780E5DC844351f00C22dF160FF9cF01131"
       abi: PositionManager
       startBlock: 29028182
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - IncreasePositionReferral
+        - DecreasePositionReferral
+      abis:
+        - name: PositionManager
+          file: ./abis/PositionManager.json
+      eventHandlers:
+        - event: IncreasePositionReferral(address,uint256,uint256,bytes32,address)
+          handler: handleIncreasePositionReferral
+        - event: DecreasePositionReferral(address,uint256,uint256,bytes32,address)
+          handler: handleDecreasePositionReferral
+      file: ./src/mapping.ts
+
+  - kind: ethereum/contract
+    name: PositionManagerV2
+    network: matic
+    source:
+      address: "0x87a3918a6A0557a48ed9c8f0cfc18Bc89a256b50"
+      abi: PositionManager
+      startBlock: 31150000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
