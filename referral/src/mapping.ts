@@ -161,6 +161,7 @@ export function handleSetCodeOwner(event: SetCodeOwner): void {
     _registerCode(event.block.timestamp, event.params.code, event.params.newAccount);
    } else {
      referralCodeEntity.owner = event.params.newAccount.toHexString()
+     referralCodeEntity.oldOwner = event.params.account.toHexString()
      referralCodeEntity.save()
    }
 }

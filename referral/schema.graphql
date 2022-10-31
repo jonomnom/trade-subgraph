@@ -71,6 +71,7 @@ type ReferralCode @entity {
   id: ID!
   code: String!
   owner: String!
+  oldOwner: String
 }
 
 type TradedReferral @entity {
